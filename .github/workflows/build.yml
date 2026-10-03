@@ -22,12 +22,49 @@ jobs:
           distribution: temurin
           java-version: '17'
 
-      - name: 准备 Android SDK 命令行工具
-        uses: android-actions/setup-android@v3
-
-      - name: 安装 Android SDK 组件
+      # 说明：GitHub 的 ubuntu-latest 运行器自带 Android SDK（含 cmdline-tools），
+      # 无需 android-actions/setup-android —— 该 Action 内部会执行 `sdkmanager tools`，
+      # 而 `tools` 包在新版 SDK 中已被 Google 移除，必然报
+      # "Failed to find package 'tools'" 并中断整个流程。
+      - name: 查看自带的 Android SDK
         run: |
-          sdkmanager "platform-tools" "platforms;android-34" "build-tools;34.0.0"
+          SDK="${ANDROID_HOME:-/usr/local/lib/android/sdk}"
+          echo "SDK 目录 = $SDK"
+          echo "ANDROID_HOME=$ANDROID_HOME"
+          echo "ANDROID_SDK_ROOT=$ANDROID_SDK_ROOT"
+          echo "--- platforms ---"
+          ls "$SDK/platforms" 2>/dev/null || echo "(空)"
+          echo "--- build-tools ---"
+          ls "$SDK/build-tools" 2>/dev/null || echo "(空)"
+
+      - name: 补齐缺失的 SDK 组件
+        run: |
+          SDK="${ANDROID_HOME:-/usr/local/lib/android/sdk}"
+          SDKMGR=$(find "$SDK/cmdline-tools" -name sdkmanager -type f 2>/dev/null | head -1)
+          echo "sdkmanager = $SDKMGR"
+          if [ -z "$SDKMGR" ]; then
+            echo "未找到 sdkmanager，跳过（依赖运行器预装组件）"
+            exit 0
+          fi
+          if [ ! -d "$SDK/platforms/android-34" ]; then
+            echo "安装 platforms;android-34 ..."
+            yes | "$SDKMGR" "platforms;android-34" || true
+          else
+            echo "platforms;android-34 已存在"
+          fi
+          if [ ! -d "$SDK/build-tools/34.0.0" ]; then
+            echo "安装 build-tools;34.0.0 ..."
+            yes | "$SDKMGR" "build-tools;34.0.0" || true
+          else
+            echo "build-tools;34.0.0 已存在"
+          fi
+          echo "--- 最终 platforms ---"
+          ls "$SDK/platforms" 2>/dev/null || true
+          echo "--- 最终 build-tools ---"
+          ls "$SDK/build-tools" 2>/dev/null || true
+
+      - name: 写入 local.properties
+        run: echo "sdk.dir=${ANDROID_HOME:-/usr/local/lib/android/sdk}" > local.properties
 
       - name: 给 gradlew 加执行权限
         run: chmod +x ./gradlew
