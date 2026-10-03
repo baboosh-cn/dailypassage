@@ -19,7 +19,16 @@
     android:orientation="vertical"
     android:padding="18dp">
 
-    <View
+    <!--
+      这里必须是 TextView（一个空的、只当色块用的 TextView），
+      **不能写成 <View>** —— RemoteViews 只支持 FrameLayout / LinearLayout /
+      RelativeLayout / GridLayout 四种布局，加上 TextView / ImageView / Button /
+      ProgressBar 等固定控件；原生 View 和自定义 View 都不支持，
+      桌面在渲染时会抛 InflateException，小部件框里就显示成
+      「载入窗口小部件时出现问题」。
+      （历史事故：v2/v3 这里误用了 <View>，v1 用 TextView 是正常的。）
+    -->
+    <TextView
         android:layout_width="26dp"
         android:layout_height="3dp"
         android:background="@drawable/accent_bar" />
