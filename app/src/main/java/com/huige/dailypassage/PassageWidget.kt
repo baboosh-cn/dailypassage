@@ -81,7 +81,8 @@ class PassageWidget : AppWidgetProvider() {
                 if (pages.size > 1) "${page + 1}/${pages.size}" else ""
             )
             // 进度线：单页时填满，看起来就是一条压住页脚的红细线
-            views.setProgressBar(R.id.progress, pages.size, page + 1)
+            // 注意 setProgressBar 只有四参重载，第 4 个是 indeterminate
+            views.setProgressBar(R.id.progress, pages.size, page + 1, false)
 
             views.setOnClickPendingIntent(
                 R.id.widget_root, State.action(context, Action.PAGE, widgetId)
