@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">每日一段</string>
+    <string name="tag_text">思维工具</string>
+    <string name="change_one">↻ 换一条</string>
+    <string name="widget_desc">每天随机显示《万维钢·现代思维工具100讲》里的一段「核心模型」</string>
+
+    <string name="main_title">每日一段</string>
+    <string name="main_sub">来自《万维钢·现代思维工具100讲》· 核心模型</string>
+
+    <string name="btn_change">换一条</string>
+    <string name="btn_exact">精确闹钟</string>
+    <string name="btn_schedule">重排每日闹钟</string>
+    <string name="btn_keepalive">打开应用设置（保活）</string>
+    <string name="btn_add_widget">怎么添加小部件？</string>
+
+    <string name="guide_title">保活白名单 · 请务必设置</string>
+    <string name="guide_body">安卓系统（尤其小米 / 华为 / OPPO / vivo / 荣耀）会清理后台任务，导致「每天自动换一条」失灵。请把本应用加入白名单：\n\n· 小米：设置 → 应用设置 → 应用管理 → 每日一段 → 省电策略选「无限制」，并允许自启动\n· 华为 / 荣耀：设置 → 应用 → 应用启动管理 → 每日一段 → 关闭「自动管理」，三项全部手动开启\n· OPPO / 一加：设置 → 电池 → 应用耗电管理 → 每日一段 → 允许后台运行\n· vivo：设置 → 电池 → 后台高耗电 → 允许每日一段\n· 其他：设置 → 应用 → 每日一段 → 电池 → 选「无限制」\n\n另外，Android 12 及以上还需点上方按钮授予「精确闹钟」权限。</string>
+</resources>
