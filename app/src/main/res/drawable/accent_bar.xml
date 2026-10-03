@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- 卡片左上角的红色小竖条：一处极小的彩色，定住视觉重心 -->
+<!--
+  全卡唯一的色块：左上角一小段红色横线，作为正文的「起笔」。
+  尺寸由使用处决定（26dp × 3dp），这里只管颜色与圆角。
+-->
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="rectangle">
     <solid android:color="@color/red" />
-    <corners android:radius="2dp" />
+    <corners android:radius="1.5dp" />
 </shape>

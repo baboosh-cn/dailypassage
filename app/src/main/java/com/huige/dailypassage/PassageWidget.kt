@@ -13,9 +13,10 @@ import android.widget.RemoteViews
  *
  * 两个可点区域：
  *   - 卡片正文（widget_root）→ 翻下一页
- *   - 右下角「↻ 换」（btn_change）→ 随机换一条
+ *   - 底部脚注右侧「↻ 换一条」（btn_change）→ 随机换一条
  *
- * 版式随尺寸自适应：字号、内边距、顶部信息行的显隐都由 State.metrics 决定。
+ * 版式随尺寸自适应：字号、行数、内边距都由 State.metrics 决定。
+ * 深色模式不在这里判断 —— 交给 values-night/colors.xml 做同名覆盖。
  */
 class PassageWidget : AppWidgetProvider() {
 
@@ -73,16 +74,13 @@ class PassageWidget : AppWidgetProvider() {
             val pages = Paginator.paginate(passage.text, m.charsPerPage)
             val page = Prefs.page(context).coerceIn(0, pages.size - 1)
 
-            views.setTextViewText(R.id.title, "${passage.id}　${passage.name}")
+            // 正文是唯一主角；条目名与页码都降级成底部脚注
             views.setTextViewText(R.id.body, pages[page])
-            views.setTextViewText(R.id.board, passage.board)
+            views.setTextViewText(R.id.foot, "${passage.id}　${passage.name}")
             views.setTextViewText(
                 R.id.pageInfo,
                 if (pages.size > 1) "${page + 1}/${pages.size}" else ""
             )
-            // 进度线：单页时填满，看起来就是一条压住页脚的红细线
-            // 注意 setProgressBar 只有四参重载，第 4 个是 indeterminate
-            views.setProgressBar(R.id.progress, pages.size, page + 1, false)
 
             views.setOnClickPendingIntent(
                 R.id.widget_root, State.action(context, Action.PAGE, widgetId)
@@ -97,13 +95,9 @@ class PassageWidget : AppWidgetProvider() {
         /** 把尺寸参数写进 RemoteViews：字号与内边距。 */
         private fun applyMetrics(views: RemoteViews, m: Metrics) {
             views.setTextViewTextSize(R.id.body, TypedValue.COMPLEX_UNIT_SP, m.fontSize)
-            views.setTextViewTextSize(R.id.title, TypedValue.COMPLEX_UNIT_SP, m.titleSize)
-            views.setTextViewTextSize(R.id.dateText, TypedValue.COMPLEX_UNIT_SP, m.metaSize)
-            views.setTextViewTextSize(R.id.board, TypedValue.COMPLEX_UNIT_SP, m.metaSize)
+            views.setTextViewTextSize(R.id.foot, TypedValue.COMPLEX_UNIT_SP, m.metaSize)
             views.setTextViewTextSize(R.id.pageInfo, TypedValue.COMPLEX_UNIT_SP, m.metaSize)
             views.setTextViewTextSize(R.id.btn_change, TypedValue.COMPLEX_UNIT_SP, m.metaSize)
-
-            views.setTextViewText(R.id.dateText, State.todayLabel())
             views.setViewPadding(R.id.widget_root, m.padPx, m.padPx, m.padPx, m.padPx)
         }
     }

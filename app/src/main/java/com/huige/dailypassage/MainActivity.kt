@@ -53,6 +53,8 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         DailyScheduler.scheduleNext(this)
+        // 顺手重绘桌面小部件：系统切深浅色后若没自动重绘，打开本页即可恢复
+        PassageWidget.refreshAll(this)
         render()
         updateExactAlarmLabel()
     }

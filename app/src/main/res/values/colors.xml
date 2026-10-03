@@ -1,19 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+  浅色配色。深色版见 values-night/colors.xml（同名覆盖，版式不变）。
+  色名语义：
+    card        卡片底色 —— 浅色模式为纸白，深色模式为墨黑
+    ink / body  一级 / 二级文字
+    gray / gray_light  三级 / 四级（脚注）文字
+    line        极细描边与分隔
+    red         唯一强调色，全卡只出现一处
+-->
 <resources>
-    <!-- 主色：克制的正红，只用于「一处重点」 -->
-    <color name="red">#C8102E</color>
-    <color name="red_dark">#8E0B20</color>
-    <color name="red_soft">#FBEDEF</color>
+    <color name="red">#D91F32</color>
+    <color name="red_dark">#A3162A</color>
 
-    <!-- 文字层级：标题 / 正文 / 元信息 三级 -->
-    <color name="ink">#1A1A1A</color>
-    <color name="body">#262626</color>
-    <color name="gray">#6B6B6B</color>
-    <color name="gray_light">#9A9A9A</color>
+    <color name="ink">#17181A</color>
+    <color name="body">#2B2B2E</color>
+    <color name="gray">#8A8A8F</color>
+    <color name="gray_light">#ABABAE</color>
 
-    <!-- 线与面：细、浅、退后 -->
-    <color name="line">#ECECEC</color>
-    <color name="track">#EFEFEF</color>
-    <color name="white">#FFFFFF</color>
+    <color name="line">#EDEBE8</color>
+    <color name="card">#FFFFFF</color>
     <color name="panel">#FAFAFA</color>
 </resources>

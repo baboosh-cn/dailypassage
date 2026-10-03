@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  桌面小部件版式（v2「刊物」风格）
+  桌面小部件版式（v3「留白」）
 
-  设计取向（参考当下热门的极简小组件）：
-  · 层级靠字号与留白，不靠色块；全卡只有 3 处红：竖条、进度线、「换」
-  · 只用细线（1dp 描边 / 3dp 进度线），卡片才不「重」
-  · 去掉独立的标签行 —— 那一行要吃掉 26dp 高，等于一整行正文
-    日期挪到标题右侧（刊物式的右上角日期），信息不减、高度省下
-  · 字号与内边距由 State.metrics 按真实尺寸下发
+  设计取向：版面交给正文，配角一律降级为脚注。
+  · 全卡只有一处彩色：左上角 26dp 红色短线，作为正文的「起笔」
+  · 正文是本卡唯一主角 —— 垂直居中、行距 1.75、占版面 80% 以上
+  · 条目名 / 页码 / 「换一条」全部缩到 11sp，并排压在底部一行脚注里
+  · 进度条已移除（它是最「工具化」的一笔，且与留白取向冲突）
+  · 圆角 20dp、内边距 18dp 起步（实际值由 State.metrics 按真实尺寸下发）
+  · 深色模式不需要单独的布局：values-night/colors.xml 覆盖同名颜色即可
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
@@ -16,82 +17,42 @@
     android:layout_height="match_parent"
     android:background="@drawable/widget_bg"
     android:orientation="vertical"
-    android:padding="14dp">
+    android:padding="18dp">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
-
-        <View
-            android:layout_width="3dp"
-            android:layout_height="13dp"
-            android:layout_marginRight="8dp"
-            android:background="@drawable/accent_bar" />
-
-        <TextView
-            android:id="@+id/title"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:textColor="@color/ink"
-            android:textSize="15sp"
-            android:textStyle="bold"
-            tools:text="1.1　叙事" />
-
-        <TextView
-            android:id="@+id/dateText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:textColor="@color/gray_light"
-            android:textSize="10sp"
-            tools:text="10.03" />
-    </LinearLayout>
+    <View
+        android:layout_width="26dp"
+        android:layout_height="3dp"
+        android:background="@drawable/accent_bar" />
 
     <TextView
         android:id="@+id/body"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:layout_marginTop="7dp"
         android:ellipsize="end"
-        android:lineSpacingMultiplier="1.55"
+        android:gravity="center_vertical"
+        android:lineSpacingMultiplier="1.75"
         android:maxLines="20"
         android:textColor="@color/body"
-        android:textSize="13sp"
+        android:textSize="14sp"
         tools:text="任何叙事都做了选择。它突出一些事实、忽略另一些事实，把先后写成因果。" />
-
-    <ProgressBar
-        android:id="@+id/progress"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="match_parent"
-        android:layout_height="3dp"
-        android:layout_marginTop="10dp"
-        android:max="1"
-        android:progress="1"
-        android:progressDrawable="@drawable/progress_line" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/board"
+            android:id="@+id/foot"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ellipsize="end"
             android:maxLines="1"
-            android:textColor="@color/gray"
-            android:textSize="10sp"
-            tools:text="一、基本世界观（6）" />
+            android:textColor="@color/gray_light"
+            android:textSize="11sp"
+            tools:text="1.1　叙事" />
 
         <TextView
             android:id="@+id/pageInfo"
@@ -99,22 +60,22 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
             android:textColor="@color/gray_light"
-            android:textSize="10sp"
+            android:textSize="11sp"
             tools:text="2/3" />
 
         <TextView
             android:id="@+id/btn_change"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:background="@drawable/change_chip"
+            android:layout_marginLeft="4dp"
             android:paddingLeft="10dp"
-            android:paddingTop="3dp"
-            android:paddingRight="10dp"
-            android:paddingBottom="3dp"
+            android:paddingTop="6dp"
+            android:paddingRight="0dp"
+            android:paddingBottom="6dp"
             android:text="@string/change_short"
             android:textColor="@color/red"
-            android:textSize="10sp" />
+            android:textSize="11sp" />
+
     </LinearLayout>
 
 </LinearLayout>

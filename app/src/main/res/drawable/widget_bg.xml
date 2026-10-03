@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+  卡片底：20dp 大圆角 + 1dp 极细描边。
+  只靠圆角和一条几乎看不见的边把卡片从壁纸上「托」起来，不加阴影
+  （RemoteViews 不支持 elevation 类效果，硬做会显得脏）。
+-->
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="rectangle">
-    <solid android:color="@color/white" />
-    <corners android:radius="16dp" />
+    <solid android:color="@color/card" />
+    <corners android:radius="20dp" />
     <stroke
         android:width="1dp"
         android:color="@color/line" />

@@ -17,9 +17,8 @@ enum class Action { PAGE, CHANGE }
  */
 data class Metrics(
     val fontSize: Float,   // 正文字号 sp
-    val titleSize: Float,  // 标题字号 sp
-    val metaSize: Float,   // 标签 / 日期 / 页脚字号 sp
-    val compact: Boolean,  // 小尺寸时隐藏顶部「标签 + 日期」行
+    val metaSize: Float,   // 底部脚注（条目名 / 页码 /「换一条」）字号 sp
+    val compact: Boolean,  // 桌面 2 行高的小尺寸，内边距收紧
     val padPx: Int,        // 卡片内边距（像素）
     val lines: Int,        // 正文最多显示几行
     val charsPerPage: Int  // 每页容量
@@ -101,32 +100,27 @@ object State {
             else -> 11f
         }
         // 阈值取 180dp：桌面按格子吸附，2 行高约 150dp、3 行高约 210dp，
-        // 所以 180dp 能干净地把「2 行」判为小尺寸，用小内边距多挤出一点正文。
+        // 所以 180dp 能干净地把「2 行」判为小尺寸，用小内边距多挤出正文空间。
         val compact = hDp < 180
-        val padDp = if (compact) 10 else 14
-        val titleSize = (fontSize + 1.5f).coerceAtMost(17f)
+        val padDp = if (compact) 16 else 20
         val metaSize = (fontSize - 2.5f).coerceAtLeast(9f)
 
-        // 正文之外被占掉的高度。按各部分实际占高逐项累加，宁可估多（留白）
-        // 也不估少 —— 估少的后果是正文溢出、被省略号吃掉字。
-        val titleLine = titleSize * 1.5f          // 标题行（竖条比字矮，取字高）
-        val footLine = metaSize * 1.5f + 6f       // 页脚（右侧胶囊按钮最高）
-        val chrome = if (compact) {
-            padDp * 2f + titleLine + 5f + 9f + 5f + footLine + 2f
-        } else {
-            padDp * 2f + titleLine + 7f + 13f + 8f + footLine + 4f
-        }
+        // 正文之外被占掉的高度，按各部分实际占高逐项累加：
+        //   上下内边距 + 顶部起笔短线（3dp）+ 底部脚注行 + 1 行安全余量
+        // 脚注行取「按钮高度」，因为它是这一行里最高的元素（上下各 6dp 内边距）。
+        // 宁可估多（多留白）也不估少 —— 估少的后果是正文溢出、被省略号吃掉字。
+        val footLine = metaSize * 1.5f + 12f
+        val chrome = padDp * 2f + 3f + footLine + 4f
 
-        val lineHeight = fontSize * 1.55f
+        val lineHeight = fontSize * 1.75f
         val usable = (hDp - chrome).coerceAtLeast(lineHeight)
         // 行数上限与布局里 body 的 maxLines 保持一致
         val lines = (usable / lineHeight).toInt().coerceIn(1, 20)
-        val perLine = ((wDp - padDp * 2 - 10) / fontSize).toInt().coerceAtLeast(6)
+        val perLine = ((wDp - padDp * 2 - 4) / fontSize).toInt().coerceAtLeast(6)
 
         val density = ctx.resources.displayMetrics.density
         return Metrics(
             fontSize = fontSize,
-            titleSize = titleSize,
             metaSize = metaSize,
             compact = compact,
             padPx = (padDp * density).toInt(),
