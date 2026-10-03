@@ -18,7 +18,7 @@ class WidgetActionReceiver : BroadcastReceiver() {
                 if (widgetId != -1 && units.isNotEmpty()) {
                     val mgr = AppWidgetManager.getInstance(context)
                     val passage = units[State.currentIndex(context, units.size)]
-                    val perPage = State.charsPerPage(context, mgr, widgetId)
+                    val perPage = State.metrics(context, mgr, widgetId).charsPerPage
                     val pages = Paginator.paginate(passage.text, perPage)
                     State.nextPage(context, pages.size)
                 }

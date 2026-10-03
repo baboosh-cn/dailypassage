@@ -5,6 +5,7 @@ import android.appwidget.AppWidgetProvider
 import android.content.ComponentName
 import android.content.Context
 import android.os.Bundle
+import android.util.TypedValue
 import android.widget.RemoteViews
 
 /**
@@ -12,7 +13,9 @@ import android.widget.RemoteViews
  *
  * 两个可点区域：
  *   - 卡片正文（widget_root）→ 翻下一页
- *   - 右下角「换一条」（btn_change）→ 立刻换一条
+ *   - 右下角「↻ 换」（btn_change）→ 随机换一条
+ *
+ * 版式随尺寸自适应：字号、内边距、顶部信息行的显隐都由 State.metrics 决定。
  */
 class PassageWidget : AppWidgetProvider() {
 
@@ -25,7 +28,7 @@ class PassageWidget : AppWidgetProvider() {
         appWidgetIds.forEach { render(context, appWidgetManager, it) }
     }
 
-    /** 用户拖动改变小部件尺寸时，重新按新尺寸分页。 */
+    /** 用户拖动改变小部件尺寸时，重新按新尺寸排版与分页。 */
     override fun onAppWidgetOptionsChanged(
         context: Context,
         appWidgetManager: AppWidgetManager,
@@ -54,9 +57,12 @@ class PassageWidget : AppWidgetProvider() {
         }
 
         fun render(context: Context, mgr: AppWidgetManager, widgetId: Int) {
+            val m = State.metrics(context, mgr, widgetId)
             val views = RemoteViews(context.packageName, R.layout.widget_passage)
-            val units = PassageRepo.all(context)
 
+            applyMetrics(views, m)
+
+            val units = PassageRepo.all(context)
             if (units.isEmpty()) {
                 views.setTextViewText(R.id.body, "内容库为空")
                 mgr.updateAppWidget(widgetId, views)
@@ -64,17 +70,18 @@ class PassageWidget : AppWidgetProvider() {
             }
 
             val passage = units[State.currentIndex(context, units.size)]
-            val perPage = State.charsPerPage(context, mgr, widgetId)
-            val pages = Paginator.paginate(passage.text, perPage)
+            val pages = Paginator.paginate(passage.text, m.charsPerPage)
             val page = Prefs.page(context).coerceIn(0, pages.size - 1)
 
-            views.setTextViewText(R.id.title, "${passage.id}  ${passage.name}")
+            views.setTextViewText(R.id.title, "${passage.id}　${passage.name}")
             views.setTextViewText(R.id.body, pages[page])
             views.setTextViewText(R.id.board, passage.board)
             views.setTextViewText(
                 R.id.pageInfo,
                 if (pages.size > 1) "${page + 1}/${pages.size}" else ""
             )
+            // 进度线：单页时填满，看起来就是一条压住页脚的红细线
+            views.setProgressBar(R.id.progress, pages.size, page + 1)
 
             views.setOnClickPendingIntent(
                 R.id.widget_root, State.action(context, Action.PAGE, widgetId)
@@ -84,6 +91,19 @@ class PassageWidget : AppWidgetProvider() {
             )
 
             mgr.updateAppWidget(widgetId, views)
+        }
+
+        /** 把尺寸参数写进 RemoteViews：字号与内边距。 */
+        private fun applyMetrics(views: RemoteViews, m: Metrics) {
+            views.setTextViewTextSize(R.id.body, TypedValue.COMPLEX_UNIT_SP, m.fontSize)
+            views.setTextViewTextSize(R.id.title, TypedValue.COMPLEX_UNIT_SP, m.titleSize)
+            views.setTextViewTextSize(R.id.dateText, TypedValue.COMPLEX_UNIT_SP, m.metaSize)
+            views.setTextViewTextSize(R.id.board, TypedValue.COMPLEX_UNIT_SP, m.metaSize)
+            views.setTextViewTextSize(R.id.pageInfo, TypedValue.COMPLEX_UNIT_SP, m.metaSize)
+            views.setTextViewTextSize(R.id.btn_change, TypedValue.COMPLEX_UNIT_SP, m.metaSize)
+
+            views.setTextViewText(R.id.dateText, State.todayLabel())
+            views.setViewPadding(R.id.widget_root, m.padPx, m.padPx, m.padPx, m.padPx)
         }
     }
 }

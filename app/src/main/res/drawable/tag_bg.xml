@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- 「思维工具」标签：极浅的红底胶囊，字用正红 -->
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="rectangle">
     <solid android:color="@color/red_soft" />
-    <corners android:radius="4dp" />
+    <corners android:radius="8dp" />
 </shape>

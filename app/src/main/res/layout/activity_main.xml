@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+  设置 / 预览页（v2）：与桌面卡片同一套视觉语言 ——
+  白底、细线、少量红、层级靠字号与留白。
+-->
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -10,29 +14,34 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="20dp">
+        android:padding="22dp">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/head_bar"
-            android:padding="16dp"
             android:text="@string/main_title"
-            android:textColor="@color/white"
-            android:textSize="20sp" />
+            android:textColor="@color/ink"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <View
+            android:layout_width="34dp"
+            android:layout_height="3dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/accent_bar" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="12dp"
             android:text="@string/main_sub"
             android:textColor="@color/gray"
-            android:textSize="12sp" />
+            android:textSize="12.5sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="20dp"
             android:background="@drawable/card_bg"
             android:orientation="vertical"
             android:padding="16dp">
@@ -42,25 +51,32 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/ink"
-                android:textSize="16sp"
-                tools:text="3.6  凯利公式" />
+                android:textSize="17sp"
+                android:textStyle="bold"
+                tools:text="3.6　凯利公式" />
 
             <TextView
                 android:id="@+id/tv_board"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
-                android:textColor="@color/red"
+                android:layout_marginTop="7dp"
+                android:textColor="@color/gray"
                 android:textSize="12sp"
                 tools:text="三、决策与判断（16）" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="13dp"
+                android:background="@color/line" />
 
             <TextView
                 android:id="@+id/tv_body"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:lineSpacingMultiplier="1.5"
-                android:textColor="@color/ink"
+                android:layout_marginTop="13dp"
+                android:lineSpacingMultiplier="1.6"
+                android:textColor="@color/body"
                 android:textSize="14sp"
                 tools:text="正文" />
         </LinearLayout>
@@ -69,7 +85,7 @@
             android:id="@+id/btn_change"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="18dp"
             android:text="@string/btn_change" />
 
         <Button
@@ -103,16 +119,17 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="28dp"
+            android:layout_marginTop="32dp"
             android:text="@string/guide_title"
             android:textColor="@color/ink"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            android:textStyle="bold" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:lineSpacingMultiplier="1.4"
+            android:layout_marginTop="9dp"
+            android:lineSpacingMultiplier="1.45"
             android:text="@string/guide_body"
             android:textColor="@color/gray"
             android:textSize="12sp" />
@@ -121,7 +138,7 @@
             android:id="@+id/tv_footer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="28dp"
+            android:layout_marginTop="30dp"
             android:textColor="@color/gray_light"
             android:textSize="11sp"
             tools:text="内容来源：万维钢·现代思维工具100讲 · 共 100 条" />

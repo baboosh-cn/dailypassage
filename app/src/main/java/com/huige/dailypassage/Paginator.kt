@@ -9,7 +9,9 @@ object Paginator {
     private const val BREAKS = "。！？；!?;"
 
     fun paginate(text: String, charsPerPage: Int): List<String> {
-        val limit = charsPerPage.coerceAtLeast(24)
+        // 下限设成 8：小部件很小时也严格按算出来的容量切，
+        // 否则「算 12 字却按 24 字切」会导致正文溢出、被省略号吃掉。
+        val limit = charsPerPage.coerceAtLeast(8)
         if (text.length <= limit) return listOf(text)
 
         val pages = ArrayList<String>()

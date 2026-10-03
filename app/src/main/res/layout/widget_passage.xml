@@ -1,4 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+  桌面小部件版式（v2「刊物」风格）
+
+  设计取向（参考当下热门的极简小组件）：
+  · 层级靠字号与留白，不靠色块；全卡只有 3 处红：竖条、进度线、「换」
+  · 只用细线（1dp 描边 / 3dp 进度线），卡片才不「重」
+  · 去掉独立的标签行 —— 那一行要吃掉 26dp 高，等于一整行正文
+    日期挪到标题右侧（刊物式的右上角日期），信息不减、高度省下
+  · 字号与内边距由 State.metrics 按真实尺寸下发
+-->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/widget_root"
@@ -8,42 +18,62 @@
     android:orientation="vertical"
     android:padding="14dp">
 
-    <TextView
-        android:id="@+id/tag"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/tag_bg"
-        android:paddingLeft="6dp"
-        android:paddingTop="2dp"
-        android:paddingRight="6dp"
-        android:paddingBottom="2dp"
-        android:text="@string/tag_text"
-        android:textColor="@color/red"
-        android:textSize="10sp" />
-
-    <TextView
-        android:id="@+id/title"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:ellipsize="end"
-        android:maxLines="1"
-        android:textColor="@color/gray"
-        android:textSize="11sp"
-        tools:text="3.6  凯利公式" />
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <View
+            android:layout_width="3dp"
+            android:layout_height="13dp"
+            android:layout_marginRight="8dp"
+            android:background="@drawable/accent_bar" />
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textColor="@color/ink"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            tools:text="1.1　叙事" />
+
+        <TextView
+            android:id="@+id/dateText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:textColor="@color/gray_light"
+            android:textSize="10sp"
+            tools:text="10.03" />
+    </LinearLayout>
 
     <TextView
         android:id="@+id/body"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:layout_marginTop="6dp"
+        android:layout_marginTop="7dp"
         android:ellipsize="end"
-        android:lineSpacingMultiplier="1.35"
+        android:lineSpacingMultiplier="1.55"
         android:maxLines="20"
-        android:textColor="@color/ink"
+        android:textColor="@color/body"
         android:textSize="13sp"
-        tools:text="凯利准则把认知优势转换成下注比例，以最大化长期对数增长率。" />
+        tools:text="任何叙事都做了选择。它突出一些事实、忽略另一些事实，把先后写成因果。" />
+
+    <ProgressBar
+        android:id="@+id/progress"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:layout_marginTop="10dp"
+        android:max="1"
+        android:progress="1"
+        android:progressDrawable="@drawable/progress_line" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -59,15 +89,15 @@
             android:layout_weight="1"
             android:ellipsize="end"
             android:maxLines="1"
-            android:textColor="@color/gray_light"
+            android:textColor="@color/gray"
             android:textSize="10sp"
-            tools:text="决策与判断" />
+            tools:text="一、基本世界观（6）" />
 
         <TextView
             android:id="@+id/pageInfo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="10dp"
+            android:layout_marginLeft="8dp"
             android:textColor="@color/gray_light"
             android:textSize="10sp"
             tools:text="2/3" />
@@ -76,11 +106,13 @@
             android:id="@+id/btn_change"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingLeft="6dp"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/change_chip"
+            android:paddingLeft="10dp"
             android:paddingTop="3dp"
-            android:paddingRight="6dp"
+            android:paddingRight="10dp"
             android:paddingBottom="3dp"
-            android:text="@string/change_one"
+            android:text="@string/change_short"
             android:textColor="@color/red"
             android:textSize="10sp" />
     </LinearLayout>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 卡片左上角的红色小竖条：一处极小的彩色，定住视觉重心 -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <solid android:color="@color/red" />
+    <corners android:radius="2dp" />
+</shape>

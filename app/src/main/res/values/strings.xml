@@ -3,6 +3,7 @@
     <string name="app_name">每日一段</string>
     <string name="tag_text">思维工具</string>
     <string name="change_one">↻ 换一条</string>
+    <string name="change_short">↻ 换</string>
     <string name="widget_desc">每天随机显示《万维钢·现代思维工具100讲》里的一段「核心模型」</string>
 
     <string name="main_title">每日一段</string>
