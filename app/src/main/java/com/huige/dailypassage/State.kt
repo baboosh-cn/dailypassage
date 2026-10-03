@@ -102,17 +102,24 @@ object State {
         // 阈值取 180dp：桌面按格子吸附，2 行高约 150dp、3 行高约 210dp，
         // 所以 180dp 能干净地把「2 行」判为小尺寸，用小内边距多挤出正文空间。
         val compact = hDp < 180
-        val padDp = if (compact) 16 else 20
+        // v4：内边距由 16/20dp 收到 14/18dp，省下的横向 4dp 让每行多放一个字
+        val padDp = if (compact) 14 else 18
         val metaSize = (fontSize - 2.5f).coerceAtLeast(9f)
 
         // 正文之外被占掉的高度，按各部分实际占高逐项累加：
-        //   上下内边距 + 顶部起笔短线（3dp）+ 底部脚注行 + 1 行安全余量
-        // 脚注行取「按钮高度」，因为它是这一行里最高的元素（上下各 6dp 内边距）。
+        //   上下内边距 + 底部脚注行 + 1 行安全余量
+        // v4 已删掉顶部的红色起笔短线（原来占 3dp），脚注行也收紧了
+        // （按钮上下内边距 6dp → 4dp，故这里由 +12 改为 +8）。
+        // 脚注行取「按钮高度」，因为它是这一行里最高的元素。
         // 宁可估多（多留白）也不估少 —— 估少的后果是正文溢出、被省略号吃掉字。
-        val footLine = metaSize * 1.5f + 12f
-        val chrome = padDp * 2f + 3f + footLine + 4f
+        val footLine = metaSize * 1.5f + 8f
+        val chrome = padDp * 2f + footLine + 4f
 
-        val lineHeight = fontSize * 1.75f
+        // v4：行距 1.75 → 1.55。这是换出第 5 行的主要来源 ——
+        // 以 4×2（250×150dp）为例，可用高度 95.75dp，
+        // 1.75 时每行 21dp 只能排 4 行，1.55 时每行 18.6dp 可以排 5 行。
+        // 布局 widget_passage.xml 的 lineSpacingMultiplier 必须与此处一致。
+        val lineHeight = fontSize * 1.55f
         val usable = (hDp - chrome).coerceAtLeast(lineHeight)
         // 行数上限与布局里 body 的 maxLines 保持一致
         val lines = (usable / lineHeight).toInt().coerceIn(1, 20)

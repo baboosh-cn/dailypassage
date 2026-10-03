@@ -2,11 +2,14 @@
 <!--
   浅色配色。深色版见 values-night/colors.xml（同名覆盖，版式不变）。
   色名语义：
-    card        卡片底色 —— 浅色模式为纸白，深色模式为墨黑
+    card        卡片底色 —— 浅色模式为暖米白（2026-10-03 由纯白 #FFFFFF 改来，
+                取自主流阅读/笔记类组件惯用的纸感底），深色模式为暖调墨色。
+                **小部件与设置页共用此色**（widget_bg 与 activity_main 都取它）。
+    panel       设置页里那张内层卡片 —— 取纯白，与米白背景形成层次
     ink / body  一级 / 二级文字
     gray / gray_light  三级 / 四级（脚注）文字
-    line        极细描边与分隔
-    red         唯一强调色，全卡只出现一处
+    line        极细描边与分隔，比底色深一档的暖灰
+    red         唯一强调色，小部件上只出现一处（「换一条」）
 -->
 <resources>
     <color name="red">#D91F32</color>
@@ -17,7 +20,7 @@
     <color name="gray">#8A8A8F</color>
     <color name="gray_light">#ABABAE</color>
 
-    <color name="line">#EDEBE8</color>
-    <color name="card">#FFFFFF</color>
-    <color name="panel">#FAFAFA</color>
+    <color name="line">#E8E2D8</color>
+    <color name="card">#F7F5F1</color>
+    <color name="panel">#FFFFFF</color>
 </resources>

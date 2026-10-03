@@ -2,17 +2,22 @@
 <!--
   深色（夜间模式）覆盖。只换颜色，版式、字号、间距与浅色版完全一致。
   系统切到深色模式时，小部件与设置页会自动取这里的值。
+
+  2026-10-03：浅色底改为暖米白 #F7F5F1 后，这里的冷黑同步换成**暖调墨色**，
+  否则白天是暖的、晚上是冷的，两版不像一套东西。
+  同时把 gray_light 调亮一档：原 #5C6169 在深底上对比度只有约 2.7:1，
+  脚注几乎看不清。
 -->
 <resources>
     <color name="red">#FF5A6E</color>
     <color name="red_dark">#C0304A</color>
 
-    <color name="ink">#F1F2F4</color>
-    <color name="body">#DCDEE3</color>
-    <color name="gray">#8A8F98</color>
-    <color name="gray_light">#5C6169</color>
+    <color name="ink">#F4F1EC</color>
+    <color name="body">#E0DCD4</color>
+    <color name="gray">#918A80</color>
+    <color name="gray_light">#7C7368</color>
 
-    <color name="line">#262A31</color>
-    <color name="card">#141519</color>
-    <color name="panel">#1A1C21</color>
+    <color name="line">#2C2723</color>
+    <color name="card">#1A1816</color>
+    <color name="panel">#211E1B</color>
 </resources>
