@@ -7,6 +7,7 @@
 
     <string name="main_title">每日一段</string>
     <string name="main_sub">来自《万维钢·现代思维工具100讲》· 核心模型</string>
+    <string name="main_footer">内容来源：万维钢·现代思维工具100讲 · 共 %1$d 条</string>
 
     <string name="btn_change">换一条</string>
     <string name="btn_exact">精确闹钟</string>

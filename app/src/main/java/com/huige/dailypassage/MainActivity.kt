@@ -59,6 +59,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun render() {
         val units = PassageRepo.all(this)
+        // 条目数从实际内容库算出，避免与文案口径脱节（此前曾把条数写死在布局里）
+        findViewById<TextView>(R.id.tv_footer).text = getString(R.string.main_footer, units.size)
         if (units.isEmpty()) {
             findViewById<TextView>(R.id.tv_body).text = "内容库为空"
             return

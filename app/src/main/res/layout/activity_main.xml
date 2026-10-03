@@ -52,7 +52,7 @@
                 android:layout_marginTop="6dp"
                 android:textColor="@color/red"
                 android:textSize="12sp"
-                tools:text="决策与判断 · 核心模型" />
+                tools:text="三、决策与判断（16）" />
 
             <TextView
                 android:id="@+id/tv_body"
@@ -118,12 +118,13 @@
             android:textSize="12sp" />
 
         <TextView
+            android:id="@+id/tv_footer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="28dp"
-            android:text="内容来源：万维钢·现代思维工具100讲 · 共 200 条"
             android:textColor="@color/gray_light"
-            android:textSize="11sp" />
+            android:textSize="11sp"
+            tools:text="内容来源：万维钢·现代思维工具100讲 · 共 100 条" />
 
     </LinearLayout>
 </ScrollView>
